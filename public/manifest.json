@@ -1,0 +1,17 @@
+{
+    "name": "Aksarantara",
+    "short_name": "Aksarantara",
+    "description": "A Progressive Web Application for managing Pegon manuscripts",
+    "icons": [
+      {
+        "src": "/logo.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#2e3841",
+    "theme_color": "#2e3841"
+  }
