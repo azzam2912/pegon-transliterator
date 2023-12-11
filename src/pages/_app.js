@@ -1,10 +1,8 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import React from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { colors } from "src/theme";
 import "@fontsource/open-sans";
 import Head from "next/head";
-import RouteGuard from "./../components/RouteGuard/index";
 
 // 2. Add your color mode config
 const config = {
@@ -22,8 +20,6 @@ const theme = extendTheme({
 });
 
 function MyApp({ Component, pageProps }) {
-  const [queryClient] = React.useState(() => new QueryClient());
-
   return (
     <>
       <Head>
@@ -62,13 +58,9 @@ function MyApp({ Component, pageProps }) {
         <meta property="og:url" content="https://pegon.works" />
         <meta property="og:image" content="https://pegon.works/logo.png" />
       </Head>
-      <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={theme}>
-          <RouteGuard>
-            <Component {...pageProps} />
-          </RouteGuard>
+          <Component {...pageProps} />
         </ChakraProvider>
-      </QueryClientProvider>
     </>
   );
 }

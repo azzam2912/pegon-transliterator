@@ -1,6 +1,6 @@
-import DashboardPage from "src/componentPage/DashboardPage";
-import { Page } from "src/componentPage/Page";
+import {Page} from "src/componentPage/Page";
+import TransliteratePage from "src/componentPage/TransliteratePage";
 
-export default function Dashboard() {
-  return <Page pageComponent={DashboardPage} />;
+export default function Transilerator() {
+  return <Page pageComponent={TransliteratePage} />;
 }

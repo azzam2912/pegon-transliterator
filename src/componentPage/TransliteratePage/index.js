@@ -10,7 +10,6 @@ import {
   Stack,
   Divider,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { ScriptTypeSelect } from "./Fragments/ScriptTypeSelect";
@@ -18,7 +17,6 @@ import { VariantSelect } from "./Fragments/VariantSelect";
 import { TransliterateInput } from "./Fragments/TransliterateInput";
 import { TransliterationHeader } from "./Fragments/TransliterationHeader";
 import { MdLightbulb } from "react-icons/md";
-import { FaExclamationTriangle } from "react-icons/fa";
 import { scriptsData } from "src/utils/objects";
 
 import {
@@ -27,36 +25,6 @@ import {
   usePegonMadureseTransliterator,
   usePegonIndonesianTransliterator,
 } from "src/hooks/usePegonTransliterator";
-
-import useJawiMalayTransliterator from "src/hooks/useJawiMalayTransliterator";
-import {
-  useChamTransliterator,
-  useBaybayinTransliterator,
-  useBuhidTransliterator,
-  useHanunooTransliterator,
-  useTagbanwaTransliterator,
-  useJawiChamTransliterator,
-  useTobaTransliterator,
-  useKaroTransliterator,
-  useMandailingTransliterator,
-  usePakpakTransliterator,
-  useSimalungunTransliterator,
-  useRejangTransliterator,
-  useBugisTransliterator,
-  useMakassarTransliterator,
-  useThaiTransliterator,
-  useLaoTransliterator,
-  useTaiVietTransliterator,
-  useKayahLiTransliterator,
-  useMonTransliterator,
-  useBurmeseTransliterator,
-  useKarenTransliterator,
-  useTaiLeTransliterator,
-  useCarakanTransliterator,
-  useSundaTransliterator,
-  useBaliTransliterator,
-  useSasakTransliterator,
-} from "src/hooks/genericTransliteratorHooks";
 
 const selectTransliterator = (script, variant) => {
   switch (script) {
@@ -70,88 +38,6 @@ const selectTransliterator = (script, variant) => {
           return usePegonMadureseTransliterator;
         case "Indonesia":
           return usePegonIndonesianTransliterator;
-      }
-      break;
-    case "Jawi":
-      switch (variant) {
-        case "Malay":
-          return useJawiMalayTransliterator;
-        case "Cham":
-          return useJawiChamTransliterator;
-      }
-      break;
-    case "Cham":
-      return useChamTransliterator;
-    case "Mon-Burmese":
-      switch (variant) {
-        case "Myanmar":
-          return useBurmeseTransliterator;
-        case "Mon":
-          return useMonTransliterator;
-        case "Kayah Li":
-          return useKayahLiTransliterator;
-        case "S'gaw Karen":
-          return useKarenTransliterator;
-        case "Tai Le":
-          return useTaiLeTransliterator;
-      }
-      break;
-    case "Rejang":
-      return useRejangTransliterator;
-    case "Baybayin":
-      switch (variant) {
-        case "Baybayin":
-          return useBaybayinTransliterator;
-        case "Buhid":
-          return useBuhidTransliterator;
-        case "Hanuno'o":
-          return useHanunooTransliterator;
-        case "Tagbanwa":
-          return useTagbanwaTransliterator;
-      }
-      break;
-    case "Batak":
-      switch (variant) {
-        case "Toba":
-          return useTobaTransliterator;
-        case "Karo":
-          return useKaroTransliterator;
-        case "Simalungun":
-          return useSimalungunTransliterator;
-        case "Angkola-Mandailing":
-          return useMandailingTransliterator;
-        case "Pakpak":
-          return usePakpakTransliterator;
-      }
-      break;
-    case "Lontara":
-      switch (variant) {
-        case "Makassar":
-          return useMakassarTransliterator;
-        case "Bugis":
-          return useBugisTransliterator;
-      }
-      break;
-    case "Sukhothai":
-      switch (variant) {
-        case "Thai":
-          return useThaiTransliterator;
-        case "Lao":
-          return useLaoTransliterator;
-        case "Tai Viet":
-          return useTaiVietTransliterator;
-      }
-      break;
-    case "Hanacaraka":
-      switch (variant) {
-        case "Jawa":
-          return useCarakanTransliterator;
-        case "Sunda":
-          return useSundaTransliterator;
-        case "Bali":
-          return useBaliTransliterator;
-        case "Sasak":
-          return useSasakTransliterator;
       }
       break;
   }
@@ -225,8 +111,6 @@ const TransliteratePage = () => {
     return () => clearTimeout(timer);
   }, [inputText]);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   const handleWikiButtonClick = () => {
     router.push("/app/wiki?script=" + script + "&variant=" + variant);
   };
@@ -234,7 +118,7 @@ const TransliteratePage = () => {
   return (
     <>
       <Head>
-        <title>Transliterator - Aksarantara</title>
+        <title>Transliterator - Aksarantara : Pegon - Latin</title>
         <meta
           name="description"
           content="Transliterate various Southeast Asian scripts to Latin and vice versa!"
@@ -335,17 +219,6 @@ const TransliteratePage = () => {
               </Stack>
             </Card>
             <Text>​</Text>
-            {script === "Jawi" && variant === "Malay" ? (
-              <HStack>
-                <FaExclamationTriangle size={13} />
-                <Text color="gray.400" fontSize="xs">
-                  This feature uses experimental AI technology and may produce
-                  inaccurate results.
-                </Text>
-              </HStack>
-            ) : (
-              ""
-            )}
           </VStack>
         </VStack>
       </AppLayout>
