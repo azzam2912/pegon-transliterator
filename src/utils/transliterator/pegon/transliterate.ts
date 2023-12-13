@@ -149,7 +149,7 @@ const digraphVowelRules: PlainRule[] = [
 ]
 
 const monographVowelHarakatAtFirstAbjadRules: PlainRule[] = [
-    ["-6-A", Pegon.Alif],
+    ["-6-a", Pegon.Alif],
     ["-6-e", Pegon.Ya + Pegon.Fatha + Pegon.Sukun],
     ["-6-o", Pegon.Waw + Pegon.Fatha + Pegon.Sukun],
     ["-6-i", Pegon.Ya + Pegon.Kasra + Pegon.Sukun],
@@ -183,7 +183,6 @@ const longEndingWawYaMaksuraRules: PlainRule[] = [
 
 const beginningDigraphVowelRules: PlainRule[] = [
     ["-9-^e", Pegon.Alif + Pegon.MaddaAbove],
-    ["-9-A", Pegon.AlifWithHamzaAbove + Pegon.Fatha ],
 ]
 
 const beginningMonographVowelRules: PlainRule[] = [
@@ -191,6 +190,8 @@ const beginningMonographVowelRules: PlainRule[] = [
     ["-10-i", Pegon.Alif + Pegon.Ya ],
     ["-10-o", Pegon.Alif + Pegon.Fatha + Pegon.Waw],
     ["-10-u", Pegon.Alif + Pegon.Waw],
+    ["-10-a", Pegon.Alif + Pegon.Fatha ],
+    ["-10-A", Pegon.AlifWithHamzaAbove + Pegon.Fatha ],
     ["-10-a", Pegon.AlifWithHamzaAbove],
 ]
 
@@ -575,6 +576,8 @@ const doubleMonographVowelAsBeginningSyllableRules: RegexRule[] =
 
 const singleFathaKasraDamma: PlainRule[] = [
     ["-26-a", Pegon.Fatha],
+    ["-26-i", Pegon.Kasra],
+    ["-26-u", Pegon.Damma],
 ]   
 
 const closedSyllable = (rules: PlainRule[]): RegexRule[] =>
@@ -1071,7 +1074,7 @@ const inverseDoubleMonographVowelAsBeginningSyllableRules: RegexRule[] =
         asInverse(alternateDoubleMonographVowelBeginningSyllableRules)
     ))
 
-const inverseAWithFatha: PlainRule[] = 
+const inverseSingleFathaKasraDamma: PlainRule[] = 
     asInverse(singleFathaKasraDamma)
 
 const inverseSukun: PlainRule[] =
@@ -1098,11 +1101,11 @@ const initiatePegonToLatinScheme = (): Rule[] => {
         inversePrefixWithSpaceAsWordBeginningRules,
         inverseDoubleMonographVowelAsBeginningSyllableRules,
         inverseSyllableRules,
+        inverseSingleFathaKasraDamma,
         inverseVowelRules,
         inverseDoubleConsonantRules,
         inverseConsonantRules,
         inversePunctuationRules,
-        inverseAWithFatha,
         inverseSukun,
         inversePepet,
         asInverse(numbers),
