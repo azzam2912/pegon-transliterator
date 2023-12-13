@@ -150,20 +150,24 @@ export const debugTransliterate = (
 ): string =>
   translationMap.reduce<string>((acc, [key, val]) => {
     const rule: RegExp = new RegExp(key, "g");
-    console.debug(
-      `acc: ${acc}\nkey: ${key}\nval: ${val}\nmatched: ${rule.test(acc)}\n`,
-    );
+    if(rule.test(acc)) {
+      console.log(
+        `acc: ${acc}\nkey: ${key}\nval: ${val}\nmatched: ${rule.test(acc)}\n`,
+      );
+    }
     return acc.replace(rule, val);
   }, stringToTransliterate.slice());
 
-export const transliterate = (
-  stringToTransliterate: string,
-  translationMap: Rule[],
-): string =>
-  translationMap.reduce<string>(
-    (acc, [key, val]) => acc.replace(new RegExp(key, "g"), val),
-    stringToTransliterate.slice(),
-  );
+// export const transliterate = (
+//   stringToTransliterate: string,
+//   translationMap: Rule[],
+// ): string =>
+//   translationMap.reduce<string>(
+//     (acc, [key, val]) => acc.replace(new RegExp(key, "g"), val),
+//     stringToTransliterate.slice(),
+//   );
+
+export const transliterate = debugTransliterate
 
 export const asInverse = (rules: PlainRule[]): PlainRule[] =>
   rules.map<PlainRule>(([key, val]) => [val, key]);
