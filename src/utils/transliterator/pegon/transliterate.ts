@@ -149,7 +149,7 @@ const digraphVowelRules: PlainRule[] = [
 ]
 
 const monographVowelHarakatAtFirstAbjadRules: PlainRule[] = [
-    ["A", Pegon.Alif],
+    ["a", Pegon.Alif],
     ["e", Pegon.Ya + Pegon.Fatha + Pegon.Sukun],
     ["o", Pegon.Waw + Pegon.Fatha + Pegon.Sukun],
     ["i", Pegon.Ya + Pegon.Kasra + Pegon.Sukun],
@@ -176,7 +176,8 @@ const singleEndingVowelRules: PlainRule[] = [
 const singleVowelAsWordEndingRules: RegexRule[] =
     asWordEnding(singleEndingVowelRules);
 
-const longEndingWawYaMaksuraRules: PlainRule[] = [
+const longEndingAlifWawYaMaksuraRules: PlainRule[] = [
+    ["aA", Pegon.Fatha + Pegon.Alif],
     ["uW", Pegon.Damma + Pegon.Waw],
     ["iY", Pegon.Kasra + Pegon.Ya],
     ["i^Y", Pegon.Kasra + Pegon.Maksura]
@@ -844,7 +845,7 @@ const numbers : PlainRule[] = [
 
 const latinToPegonScheme: Rule[] =
     prepareRules(chainRule(
-        longEndingWawYaMaksuraRules,
+        longEndingAlifWawYaMaksuraRules,
         specialPrepositionAsSingleWordsRule,
         specialRaWithMaddaAboveRules,
         closedSyllableWithSoundARules,
@@ -874,7 +875,7 @@ const latinToPegonScheme: Rule[] =
 
 const latinToPegonSchemeForMoreThanTwoSyllables: Rule[] =
     prepareRules(chainRule(
-        longEndingWawYaMaksuraRules,
+        longEndingAlifWawYaMaksuraRules,
         specialPrepositionAsSingleWordsRule,
         specialRaWithMaddaAboveRules,
         closedSyllableWithSoundARules,
@@ -1040,8 +1041,8 @@ const inverseVowelRules: Rule[] =
         inverseSingleVowelRules,
         inverseBeginningIForDeadConsonantRules)
 
-const inverseLongEndingWawYaMaksuraRules: PlainRule[] =
-    asInverse(longEndingWawYaMaksuraRules)
+const inverseLongEndingAlifWawYaMaksuraRules: PlainRule[] =
+    asInverse(longEndingAlifWawYaMaksuraRules)
 
 const inverseDoubleConsonantRules: PlainRule[] =
     asInverse(doubleMonographConsonantRules)
@@ -1092,9 +1093,9 @@ const inverseVowelStartedWithIRules: PlainRule[] =
 const initiatePegonToLatinScheme = (): Rule[] => {
     return prepareRules(chainRule<Rule>(
         inverseVowelStartedWithIRules,
+        inverseLongEndingAlifWawYaMaksuraRules,
         inverseIndonesianSuffixesWithAn,
         inverseDoubleEndingVowelAsWordEndingRules,
-        inverseLongEndingWawYaMaksuraRules,
         inverseSpecialPrepositionAsSingleWordsRules,
         inverseSpecialRaWithMaddaAboveRules,
         inversePrefixWithBeginningVowelsAsWordBeginningRules,
