@@ -194,6 +194,8 @@ const beginningMonographVowelRules: PlainRule[] = [
     ["o", Pegon.Alif + Pegon.Fatha + Pegon.Waw],
     ["u", Pegon.Alif + Pegon.Waw],
     ["a", Pegon.AlifWithHamzaAbove],
+    ["i", Pegon.Alif + Pegon.Kasra ],
+    ["u", Pegon.Alif + Pegon.Damma ],
 ]
 
 const beginningSingleVowelRules: PlainRule[] =
@@ -207,7 +209,8 @@ const beginningIForDeadConsonantRules: PlainRule[] = [
 ]
 
 const beginningIForOpenConsonantRules: PlainRule[] = [
-    ["i", Pegon.Alif + Pegon.Ya]
+    ["i", Pegon.Alif + Pegon.Ya],
+    ["i", Pegon.Alif + Pegon.Kasra ],
 ]
 
 const doubleDigraphVowelRules: PlainRule[] = [
