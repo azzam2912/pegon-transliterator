@@ -574,8 +574,10 @@ const alternateDoubleMonographVowelBeginningSyllableRules: PlainRule[] =
 const doubleMonographVowelAsBeginningSyllableRules: RegexRule[] =
     asWordBeginning(doubleMonographVowelBeginningSyllableRules)
 
-const aWithFatha: PlainRule[] = [
+const singleFathaKasraDamma: PlainRule[] = [
     ["a", Pegon.Fatha],
+    ["i", Pegon.Kasra],
+    ["u", Pegon.Damma],
 ]   
 
 const closedSyllable = (rules: PlainRule[]): RegexRule[] =>
@@ -583,7 +585,7 @@ const closedSyllable = (rules: PlainRule[]): RegexRule[] =>
         [new RegExp(`(${key})(?![_aiueo^\`WAIUEOY])`), `${val}`])
 
 const closedSyllableWithSoundARules: RegexRule[] =
-    closedSyllable(ruleProduct(ruleProduct(consonantRules,aWithFatha), consonantRules))
+    closedSyllable(ruleProduct(ruleProduct(consonantRules,singleFathaKasraDamma), consonantRules))
 
 
 const indonesianPrefixesRules: PlainRule[] = [
@@ -818,7 +820,7 @@ const transliterateJawaAffixes = (affixes: string[], baseWord: string): string[]
 }
 
 const firstSyllableWithSoundA: RegexRule[] =
-    asWordBeginning(ruleProduct(consonantRules, aWithFatha));
+    asWordBeginning(ruleProduct(consonantRules, singleFathaKasraDamma));
 
 const countSyllable = (word: string): number => {
     const matches = word.match(/(e_u|a_i|a_u|\^e|`[aiueoAIUEO]|[aiueoAIUEO]){1}/g)
@@ -1072,8 +1074,8 @@ const inverseDoubleMonographVowelAsBeginningSyllableRules: RegexRule[] =
         asInverse(alternateDoubleMonographVowelBeginningSyllableRules)
     ))
 
-const inverseAWithFatha: PlainRule[] = 
-    asInverse(aWithFatha)
+const inverseSingleFathaKasraDamma: PlainRule[] = 
+    asInverse(singleFathaKasraDamma)
 
 const inverseSukun: PlainRule[] =
     asInverse(sukunRules)
@@ -1103,7 +1105,7 @@ const initiatePegonToLatinScheme = (): Rule[] => {
         inverseDoubleConsonantRules,
         inverseConsonantRules,
         inversePunctuationRules,
-        inverseAWithFatha,
+        inverseSingleFathaKasraDamma,
         inverseSukun,
         inversePepet,
         asInverse(numbers),
