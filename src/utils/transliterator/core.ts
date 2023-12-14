@@ -254,3 +254,9 @@ export const ruleKeyLengthDiff = ([a, _]: PlainRule, [b, __]: PlainRule): number
   b.length - a.length;
 
 export const stringLengthDiff = (a: string, b: string): number => b.length - a.length
+
+export const processShaddaException = (str: string): string => {
+  return str.replace(/(.)(\u0651)/g, function(_, charBefore, char) {
+    return charBefore + charBefore;
+  });
+}

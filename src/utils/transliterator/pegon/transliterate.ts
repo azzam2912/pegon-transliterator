@@ -15,7 +15,8 @@ import { prepareRules,
          asNotWordBeginning,
          asNotWordEnding,
          asSingleWord,
-         asInverse
+         asInverse,
+         processShaddaException,
        } from "../core"
 
 const enum Pegon {
@@ -94,7 +95,9 @@ const enum Pegon {
     FathaThenYaThenKasra = "\u064E\u064A\u0650",
     TaMarbuta = "\u0629",
     YaWithHamzaAbove = "\u0678",
+    YaHamzaAbove="\u0626",
     FathaThenYaWithHamzaAbove = "\u064E\u0678",
+    FathaThenYaHamzaAbove = "\u064E\u0626",
     Maksura = "\u0649",
     Comma = "\u060C",
     Sukun = "\u0652",
@@ -128,12 +131,15 @@ const pepetRules: PlainRule[] = [
 ]
 
 const monographVowelRules: PlainRule[] = [
-    ["a", Pegon.Alif],
+    ["-4-'", Pegon.WawHamzaAbove],
+    ["-4-a", Pegon.Alif + Pegon.Fatha ],
+    ["-4-a", Pegon.Alif],
     // asumsi semua e tanpa diakritik taling
-	["e", Pegon.Fatha + Pegon.Ya],
-	["o", Pegon.Fatha + Pegon.Waw],
-	["i", Pegon.Ya],
-	["u", Pegon.Waw],
+	["-4-e", Pegon.Fatha + Pegon.Ya],
+	["-4-o", Pegon.Fatha + Pegon.Waw],
+    
+	["-4-i", Pegon.Ya],
+	["-4-u", Pegon.Waw],
     //second options of rules 4, 5, 6
     ["W", Pegon.Waw],
     ["A", Pegon.Alif],
@@ -141,19 +147,21 @@ const monographVowelRules: PlainRule[] = [
 ]
 
 const digraphVowelRules: PlainRule[] = [
-    ["^e", Pegon.Alif + Pegon.Pepet],
-    ["^e", Pegon.MaddaAbove],
-    ["^e", Pegon.YaWithHamzaAbove],
-    ["`a", Pegon.YaWithHamzaAbove + Pegon.Alif],
-    ["`U", Pegon.WawHamzaAbove + Pegon.Damma],
+    ["-5-^e", Pegon.Alif + Pegon.Pepet],
+    ["-5-^e", Pegon.MaddaAbove],
+    ["-5-^e", Pegon.YaWithHamzaAbove],
+    ["-5-'a", Pegon.YaWithHamzaAbove + Pegon.Alif],
+    ["-5-'U", Pegon.WawHamzaAbove + Pegon.Damma],
 ]
 
 const monographVowelHarakatAtFirstAbjadRules: PlainRule[] = [
-    ["a", Pegon.Alif],
-    ["e", Pegon.Ya + Pegon.Fatha + Pegon.Sukun],
-    ["o", Pegon.Waw + Pegon.Fatha + Pegon.Sukun],
-    ["i", Pegon.Ya + Pegon.Kasra + Pegon.Sukun],
-    ["u", Pegon.Waw + Pegon.Damma + Pegon.Sukun],    
+    ["-6-i", Pegon.Alif + Pegon.Kasra ],
+    ["-6-u", Pegon.Alif + Pegon.Damma ],
+    ["-6-a", Pegon.Alif],
+    ["-6-e", Pegon.Ya + Pegon.Fatha + Pegon.Sukun],
+    ["-6-o", Pegon.Waw + Pegon.Fatha + Pegon.Sukun],
+    ["-6-i", Pegon.Ya + Pegon.Kasra + Pegon.Sukun],
+    ["-6-u", Pegon.Waw + Pegon.Damma + Pegon.Sukun],    
 ]
 
 const vowelStartedWithIRules: PlainRule[] = [
@@ -177,25 +185,26 @@ const singleVowelAsWordEndingRules: RegexRule[] =
     asWordEnding(singleEndingVowelRules);
 
 const longEndingAlifWawYaMaksuraRules: PlainRule[] = [
-    ["aA", Pegon.Fatha + Pegon.Alif],
-    ["uW", Pegon.Damma + Pegon.Waw],
-    ["iY", Pegon.Kasra + Pegon.Ya],
-    ["i^Y", Pegon.Kasra + Pegon.Maksura]
+    ["-8-aA", Pegon.Fatha + Pegon.Alif],
+    ["-8-uW", Pegon.Damma + Pegon.Waw],
+    ["-8-iY", Pegon.Alif + Pegon.Kasra + Pegon.Ya],
+    ["-8-iY", Pegon.Kasra + Pegon.Ya],
+    ["-8-i^y", Pegon.Alif+Pegon.Kasra + Pegon.Maksura],
+    ["-8-i^y", Pegon.Kasra + Pegon.Maksura]
 ]
 
 const beginningDigraphVowelRules: PlainRule[] = [
-    ["^e", Pegon.Alif + Pegon.MaddaAbove],
-    ["A", Pegon.AlifWithHamzaAbove + Pegon.Fatha ],
+    ["-9-^e", Pegon.Alif + Pegon.MaddaAbove],
 ]
 
 const beginningMonographVowelRules: PlainRule[] = [
-    ["e", Pegon.Alif + Pegon.Fatha + Pegon.Ya],
-    ["i", Pegon.Alif + Pegon.Ya ],
-    ["o", Pegon.Alif + Pegon.Fatha + Pegon.Waw],
-    ["u", Pegon.Alif + Pegon.Waw],
-    ["a", Pegon.AlifWithHamzaAbove],
-    ["i", Pegon.Alif + Pegon.Kasra ],
-    ["u", Pegon.Alif + Pegon.Damma ],
+    ["-10-e", Pegon.Alif + Pegon.Fatha + Pegon.Ya],
+    ["-10-a", Pegon.Alif + Pegon.Fatha],
+    ["-10-i", Pegon.Alif + Pegon.Ya ],
+    ["-10-o", Pegon.Alif + Pegon.Fatha + Pegon.Waw],
+    ["-10-u", Pegon.Alif + Pegon.Waw],
+    ["-10-a", Pegon.AlifWithHamzaAbove + Pegon.Fatha ],
+    ["-10-a", Pegon.AlifWithHamzaAbove],
 ]
 
 const beginningSingleVowelRules: PlainRule[] =
@@ -231,13 +240,13 @@ const doubleMonographVowelRulesStandard: PlainRule[] = [
     ["ae", Pegon.Alif +
         Pegon.Ha +
         Pegon.Fatha + Pegon.Ya],
-    ["a`e", Pegon.Alif +
+    ["-14-a'e", Pegon.Alif +
         Pegon.YaWithHamzaAbove +
         Pegon.Fatha + Pegon.Ya],
     ["ai", Pegon.Alif +
         Pegon.Ha +
         Pegon.Ya],
-    ["a`i", Pegon.Alif +
+    ["-14-a'i", Pegon.Alif +
         Pegon.YaWithHamzaAbove +
         Pegon.Ya],
     ["au", Pegon.Alif +
@@ -249,12 +258,12 @@ const doubleMonographVowelRulesStandard: PlainRule[] = [
     ["iu", Pegon.Ya +
         Pegon.Ya +
         Pegon.Waw],
-    ["i`u", Pegon.Ya +
+    ["-14-i'u", Pegon.Ya +
         Pegon.YaWithHamzaAbove +
         Pegon.Waw],
     ["Ya", Pegon.Ya +
         Pegon.Ya + Pegon.Alif],
-    ["Y`a", Pegon.Ya +
+    ["-14-Y'a", Pegon.Ya +
         Pegon.YaWithHamzaAbove + Pegon.Alif],
     ["aa", 
         Pegon.Alif + 
@@ -406,30 +415,32 @@ const beginningSingleVowelAsWordBeginningRules: RegexRule[] =
     asWordBeginning(beginningSingleVowelRules);
 
 const monographConsonantRules: PlainRule[] = [
-    ["b", Pegon.Ba],
-    ["t", Pegon.Ta],
-    ["c", Pegon.Ca],
-    ["d", Pegon.Dal],
-    ["r", Pegon.Ra],
-    ["z", Pegon.Zain],
-    ["s", Pegon.Sin],
-    ["'", Pegon.Ain],
-    ["j", Pegon.Jim],
-    ["f", Pegon.Fa],
-    ["q", Pegon.Qaf],
-    ["p", Pegon.Peh],
-    ["v", Pegon.Peh],
-    ["k", Pegon.Kaf],
-    ["G", Pegon.KafWithOneDotBelow],
-    ["g", Pegon.KafWithThreeDotsBelow],
-    ["l", Pegon.Lam],
-    ["m", Pegon.Mim],
-    ["n", Pegon.Nun],
-    ["h", Pegon.Ha],
-    ["w", Pegon.Waw],
-    ["y", Pegon.Ya],
+    ["-21-'", Pegon.WawHamzaAbove],
+    ["-21-b", Pegon.Ba],
+    ["-21-t", Pegon.Ta],
+    ["-21-c", Pegon.Ca],
+    ["-21-d", Pegon.Dal],
+    ["-21-r", Pegon.Ra],
+    ["-21-z", Pegon.Zain],
+    ["-21-s", Pegon.Sin],
+    ["-21-'", Pegon.Ain],
+    ["-21-j", Pegon.Jim],
+    ["-21-f", Pegon.Fa],
+    ["-21-q", Pegon.Qaf],
+    ["-21-p", Pegon.Peh],
+    ["-21-v", Pegon.Peh],
+    ["-21-k", Pegon.Kaf],
+    ["-21-G", Pegon.KafWithOneDotBelow],
+    ["-21-g", Pegon.KafWithThreeDotsBelow],
+    ["-21-l", Pegon.Lam],
+    ["-21-m", Pegon.Mim],
+    ["-21-n", Pegon.Nun],
+    ["-21-h", Pegon.Ha],
+    ["-21-w", Pegon.Waw],
+    ["-21-y", Pegon.Ya],
     // Tambahan konsonan Arab
-    ["'`", Pegon.Hamza]
+    ["-21-'", Pegon.Hamza],
+    ["-21-'", Pegon.YaHamzaAbove]
 ]
 
 const digraphConsonantRules: PlainRule[] = [
@@ -579,9 +590,9 @@ const doubleMonographVowelAsBeginningSyllableRules: RegexRule[] =
     asWordBeginning(doubleMonographVowelBeginningSyllableRules)
 
 const singleFathaKasraDamma: PlainRule[] = [
-    ["a", Pegon.Fatha],
-    ["i", Pegon.Kasra],
-    ["u", Pegon.Damma],
+    ["-26-a", Pegon.Fatha],
+    ["-26-i", Pegon.Kasra],
+    ["-26-u", Pegon.Damma],
 ]   
 
 const closedSyllable = (rules: PlainRule[]): RegexRule[] =>
@@ -590,6 +601,9 @@ const closedSyllable = (rules: PlainRule[]): RegexRule[] =>
 
 const closedSyllableWithSoundARules: RegexRule[] =
     closedSyllable(ruleProduct(ruleProduct(consonantRules,singleFathaKasraDamma), consonantRules))
+
+const syllableWithLongVowelRules: PlainRule[] =
+    ruleProduct(consonantRules, longEndingAlifWawYaMaksuraRules)
 
 
 const indonesianPrefixesRules: PlainRule[] = [
@@ -659,7 +673,8 @@ const transliterateISuffix = (baseWord: string) => {
             return Pegon.Ya
 }
 
-
+const simpleSyllableRules: PlainRule[] = 
+    ruleProduct(consonantRules, singleVowelRules)
 
 const baseWordLastLetterVowel: PlainRule[] = [
     ["a", ""],
@@ -1093,23 +1108,29 @@ const inverseIndonesianSuffixesWithAn: PlainRule[] =
 const inverseVowelStartedWithIRules: PlainRule[] =
     asInverse(vowelStartedWithIRules)
 
+const inverseSyllableWithLongVowelRules: PlainRule[] =
+    asInverse(syllableWithLongVowelRules)
+
+const inverseSimpleSyllableRules: PlainRule[] =
+    asInverse(simpleSyllableRules)
+
 const initiatePegonToLatinScheme = (): Rule[] => {
     return prepareRules(chainRule<Rule>(
         inverseVowelStartedWithIRules,
+        inverseDoubleEndingVowelAsWordEndingRules,
+        inverseSyllableRules,
         inverseLongEndingAlifWawYaMaksuraRules,
         inverseIndonesianSuffixesWithAn,
-        inverseDoubleEndingVowelAsWordEndingRules,
         inverseSpecialPrepositionAsSingleWordsRules,
         inverseSpecialRaWithMaddaAboveRules,
         inversePrefixWithBeginningVowelsAsWordBeginningRules,
         inversePrefixWithSpaceAsWordBeginningRules,
         inverseDoubleMonographVowelAsBeginningSyllableRules,
-        inverseSyllableRules,
         inverseVowelRules,
+        inverseSingleFathaKasraDamma,
         inverseDoubleConsonantRules,
         inverseConsonantRules,
         inversePunctuationRules,
-        inverseSingleFathaKasraDamma,
         inverseSukun,
         inversePepet,
         asInverse(numbers),
@@ -1121,7 +1142,8 @@ const initiatePegonToLatinScheme = (): Rule[] => {
 export const transliteratePegonToLatin = (pegonString: string, lang: string = "Indonesia"): string => {
     initiateDoubleMonographVowelRules(lang);
     const pegonToLatinScheme: Rule[] = initiatePegonToLatinScheme();
-    return transliterate(pegonString, pegonToLatinScheme)
+    const transliterationResult: string = transliterate(pegonString, pegonToLatinScheme);
+    return processShaddaException(transliterationResult)
 }
                             
 const standardLatinRules: PlainRule[] = [
@@ -1145,11 +1167,11 @@ const standardLatinRules: PlainRule[] = [
     ["a_i", "ai"],
     ["a_u", "au"],
     ["^e", "ê"],
-    ["`a", "a"],
-    ["`i", "i"],
-    ["`u", "u"],
-    ["`e", "e"],
-    ["`o", "o"],
+    ["'a", "a"],
+    ["'i", "i"],
+    ["'u", "u"],
+    ["'e", "e"],
+    ["'o", "o"],
     ["Y", "i"],
     ["O", "o"],
     ["A", "a"],
