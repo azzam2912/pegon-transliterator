@@ -1175,8 +1175,8 @@ const standardLatinRules: PlainRule[] = [
     ["A", "a"],
     ["U", "u"],
     ["G", "g"],
+    ["^.", ""],
     [".", ""],
-    ["^.", ""]
 ];
 
 
