@@ -302,7 +302,7 @@ const doubleMonographVowelRulesSunda: PlainRule[] = [
         Pegon.Sukun],
 ]
 // TODO
-var doubleMonographVowelRules: PlainRule[] = [];
+var doubleMonographVowelRules: PlainRule[] = doubleMonographVowelRulesSunda;
 
 const initiateDoubleMonographVowelRules = (lang: string) => {
     if(lang === "Sunda"){
