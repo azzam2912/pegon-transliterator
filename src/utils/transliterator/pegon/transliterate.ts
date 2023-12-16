@@ -1115,12 +1115,12 @@ const inverseSimpleSyllableRules: PlainRule[] =
 const initiatePegonToLatinScheme = (): Rule[] => {
     return prepareRules(chainRule<Rule>(
         inverseDoubleEndingVowelAsWordEndingRules,
+        inverseSpecialRaWithMaddaAboveRules,
         inverseSyllableRules,
         inverseVowelStartedWithIRules,
         inverseLongEndingAlifWawYaMaksuraRules,
         inverseIndonesianSuffixesWithAn,
         inverseSpecialPrepositionAsSingleWordsRules,
-        inverseSpecialRaWithMaddaAboveRules,
         inversePrefixWithBeginningVowelsAsWordBeginningRules,
         inversePrefixWithSpaceAsWordBeginningRules,
         inverseDoubleMonographVowelAsBeginningSyllableRules,
